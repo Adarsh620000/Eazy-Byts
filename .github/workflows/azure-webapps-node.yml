@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Ordering System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>RADHIKA BHOG</h1>
+        <h1 id="one">Pure Veg Auspicious Restaurant <h1>
+       <h2> 
+   <image src="https://media.gettyimages.com/id/1124318165/photo/south-indian-meal.jpg?s=1024x1024&w=gi&k=20&c=00hCRCR91ySrjM2qWge-vGHoop9qr2Pz2---4uEQacc="height=160 width="500"/>
+     </h2>
+     <marquee
+     class="marq"
+     bgcolor=green;
+     behaviour=alternate
+     direction="left"
+     loop="">
+     Welcome to Radhika Bhog!!......@@...... 
+         Radhika Bhog Me Aapka Swagat Hai!!</marquee>
+
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#cart">Cart</a></li>
+            <li><a href="#status">Order Status</a></li>
+        </ul>
+    </nav>
+
+    <section id="menu">
+        <h2>Menu</h2>
+        <div id="menu-items">
+            <!-- Menu items will be dynamically added here -->
+        </div>
+    </section>
+
+    <section id="cart">
+        <h2>Cart</h2>
+        <div id="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <button id="place-order">Place Order</button>
+    </section>
+
+    <section id="status">
+        <h2>Order Status</h2>
+        <div id="order-status">
+            <!-- Order status will be dynamically updated here -->
+        </div>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header, nav, section {
+    margin: 0px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    
+
+}
+section{
+    border-color:rgb(146, 7, 245);
+    border-width:3px;
+
+}
+
+
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    
+
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 200px;
+    font-size: large;
+}
+
+#menu-items, #cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    border-width:2px;
+}
+
+.menu-item, .cart-item {
+    border: 3px solid #ccc;
+    border-color:black;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    background-color:rgb(208, 15, 188);
+    *{
+        background-color:rgb(208, 15, 188);
+
+    }
+    button{
+        background-color:rgb(207, 247, 7);
+    }
+
+
+}
+
+button {
+    margin-top: 10px;
+    color:black;
+    font-weight: bolder;
+    background-color:rgb(207, 247, 7);
+}
+h1{
+    color :gold;
+    font-family  : theme new roman;
+    text-align : center;
+    text-decoration:underline;
+    font-weight:bolder;
+    font-size:40px;
+    background-color:orangered;
+
+    
+}
+header{
+    border-color:rgb(11, 10, 10);
+    border-width: 5px;
+    background-color:orangered;
+    h1{
+        text-align:center ;
+        font-size:30px;
+        background-color:orangered;
+    }
+    h2{
+        background-color: orangered;
+    }
+}
+*{
+    background-color:rgb(130, 211, 244);
+    
+}
+marquee{
+    background-color :rgb(39, 132, 16);
+    font-weight:bolder;
+}
+#one{
+    color:rgb(117, 13, 117);
+    text-decoration:overline;
+
+}
+ nav{
+    
+    font-weight:bolder;
+ }
+
+
+ 
+ 
+ // Dummy data for the menu
+const menu = [
+    { id: 1, name: "Pizza", price: 10 },
+    { id: 2, name: "Burger", price: 8 },
+    { id: 3, name: "Pasta", price: 12 },
+    { id: 4, name: "Panner rice", price: 11},
+    { id: 5, name: "Masala kulcha", price: 12 },
+    { id: 6, name: "Panner roll", price: 8},
+    { id: 7, name: "Mushroom chilli", price: 9},
+    { id: 8, name: "Chola kulcha", price: 10},
+    { id: 9, name: "kadai panner", price: 11},
+    { id: 10, name: "Panner copta", price: 12},
+    { id: 11, name: "Jeera rice", price: 7},
+    { id: 12, name: "Hyderabadi biyani", price: 11},
+    { id: 13, name: "Biryani", price: 10},
+    { id: 14, name: "Masala dosha", price: 10},
+    { id: 15, name: "Plane dosha", price: 9},
+
+
+];
+
+const cart = [];
+
+// Function to display the menu
+function displayMenu() {
+    const menuItemsDiv = document.getElementById('menu-items');
+    menuItemsDiv.innerHTML = '';
+    menu.forEach(item => {
+        const menuItemDiv = document.createElement('div');
+        menuItemDiv.className = 'menu-item';
+        menuItemDiv.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>Price: $${item.price}</p>
+            <button onclick="addToCart(${item.id})">Add to Cart</button>
+        `;
+        menuItemsDiv.appendChild(menuItemDiv);
+    });
+}
+
+// Function to add items to the cart
+function addToCart(itemId) {
+    const item = menu.find(m => m.id === itemId);
+    cart.push(item);
+    displayCart();
+}
+
+// Function to display the cart
+function displayCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    cartItemsDiv.innerHTML = '';
+    cart.forEach((item, index) => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.className = 'cart-item';
+        cartItemDiv.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>Price: $${item.price}</p>
+            <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItemDiv);
+    });
+}
+
+// Function to remove items from the cart
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    displayCart();
+}
+
+// Function to place an order
+function placeOrder() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    alert('Order placed successfully!');
+    // Clear the cart
+    cart.length = 0;
+    displayCart();
+    // Update order status
+    document.getElementById('order-status').innerText = 'Your order is being prepared!';
+}
+
+document.getElementById('place-order').addEventListener('click', placeOrder);
+
+// Initialize the menu on page load
+displayMenu();
+# This workflow will build and push a node.js application to an Azure Web App when a commit is pushed to your default branch.
+#
+# This workflow assumes you have already created the target Azure App Service web app.
+# For instructions see https://docs.microsoft.com/en-us/azure/app-service/quickstart-nodejs?tabs=linux&pivots=development-environment-cli
+#
+# To configure this workflow:
+#
+# 1. Download the Publish Profile for your Azure Web App. You can download this file from the Overview page of your Web App in the Azure Portal.
+#    For more information: https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials
+#
+# 2. Create a secret in your repository named AZURE_WEBAPP_PUBLISH_PROFILE, paste the publish profile contents as the value of the secret.
+#    For instructions on obtaining the publish profile see: https://docs.microsoft.com/azure/app-service/deploy-github-actions#configure-the-github-secret
+#
+# 3. Change the value for the AZURE_WEBAPP_NAME. Optionally, change the AZURE_WEBAPP_PACKAGE_PATH and NODE_VERSION environment variables below.
+#
+# For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
+# For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '14.x'                # set this to the node version to use
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build --if-present
+        npm run test --if-present
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: node-app
+        path: .
+
+  deploy:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: node-app
+
+    - name: 'Deploy to Azure WebApp'
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
